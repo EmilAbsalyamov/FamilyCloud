@@ -1,0 +1,8 @@
+{
+  "name": "familyCloud",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/EmilAbsalyamov/familyCloud.git",
+  "author": "Emil Absalyamov <absalyamov.work@gmail.com>",
+  "license": "MIT"
+}
