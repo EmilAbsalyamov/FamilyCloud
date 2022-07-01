@@ -1,40 +1,37 @@
-const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCssAssetPlugin = require("optimize-css-assets-webpack-plugin");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const path = require('path');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
 const optimization = () => {
   const config = {
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
     },
   };
 
   if (isProd) {
-    config.minimizer = [
-      new OptimizeCssAssetPlugin(),
-      new TerserWebpackPlugin(),
-    ];
+    config.minimizer = [new OptimizeCssAssetPlugin(), new TerserWebpackPlugin()];
   }
 
   return config;
 };
 
-const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
+const filename = ext => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
 
-const tsLoaders = (extraPreset) => {
+const tsLoaders = extraPreset => {
   const defaultLoaders = [
     {
-      loader: "babel-loader",
+      loader: 'babel-loader',
       options: {
-        presets: ["@babel/preset-env", "@babel/preset-typescript"],
+        presets: ['@babel/preset-env', '@babel/preset-typescript'],
       },
     },
   ];
@@ -49,14 +46,14 @@ const tsLoaders = (extraPreset) => {
 const getPlugins = () => {
   const defaultPlugins = [
     new HTMLWebpackPlugin({
-      template: "./index.html",
+      template: './index.html',
       minify: {
         collapseWhitespace: !isDev,
       },
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: filename("css"),
+      filename: filename('css'),
     }),
   ];
 
@@ -70,19 +67,19 @@ const getPlugins = () => {
 };
 
 module.exports = {
-  context: path.resolve(__dirname, "app"),
-  mode: "development",
-  entry: "./app.tsx",
+  context: path.resolve(__dirname, 'app'),
+  mode: 'development',
+  entry: './app.tsx',
   devServer: {
     port: 3100,
     hot: isDev,
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: filename("js"),
+    path: path.resolve(__dirname, 'dist'),
+    filename: filename('js'),
   },
   resolve: {
-    extensions: [".json", ".tsx", ".ts", ".js"],
+    extensions: ['.json', '.tsx', '.ts', '.js'],
   },
   optimization: optimization(),
   plugins: getPlugins(),
@@ -98,12 +95,12 @@ module.exports = {
               reloadAll: true,
             },
           },
-          "css-loader",
+          'css-loader',
         ],
       },
       {
         test: /\.(png|jpg|svg)$/,
-        use: ["file-loader"],
+        use: ['file-loader'],
       },
       {
         test: /\.ts$/,
@@ -113,9 +110,9 @@ module.exports = {
       {
         test: /\.tsx$/,
         exclude: /node_modules/,
-        use: tsLoaders("@babel/preset-react"),
+        use: tsLoaders('@babel/preset-react'),
       },
     ],
   },
-  devtool: isDev ? "source-map" : "",
+  devtool: isDev ? 'source-map' : '',
 };
