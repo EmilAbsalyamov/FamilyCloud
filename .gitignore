@@ -2,3 +2,8 @@
 node_modules
 # Logs
 /*.log
+/.idea/.gitignore
+/.idea/familyCloud.iml
+/.idea/modules.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
